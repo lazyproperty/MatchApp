@@ -70,6 +70,7 @@ extension ViewController: UICollectionViewDelegate {
             if cell.card?.isFlipped == false {
                 cell.flipUP()
             } 
+            
             // unabling user flips the card manually
 //            else {
 //                cell.flipDown()
