@@ -69,10 +69,10 @@ extension ViewController: UICollectionViewDelegate {
         if let cell = collectionView.cellForItem(at: indexPath) as? Cell {
             
             //Check the status of the card to determine how to flip it
-            if cell.card?.isFlipped == false {
+            if cell.card?.isFlipped == false && cell.card?.isMatched == false {
                 
                 // Flip the card up
-                cell.flipUP()
+                cell.flipUp()
                 
                 // Check whether this is the first flipped card or the second
                 if firstFlippedCardIndex == nil {
@@ -85,8 +85,47 @@ extension ViewController: UICollectionViewDelegate {
                     // Second card that is flipped
                     
                     // Run the comparison logic
+                    checkForMatch(indexPath)
                 }
             }
+        }
+        
+        // MARK: - Game Logic Method
+        func checkForMatch(_ secondFlippedCardIndex: IndexPath) {
+            
+            // Get the two card objects for the two indices and see if they match
+            let cardOne = cardsArray[firstFlippedCardIndex!.row]
+            let cardTwo = cardsArray[secondFlippedCardIndex.row]
+            
+            // Get the two collection view cells that represent card one and card two
+            
+            let cardOneCell = collectionView.cellForItem(at: firstFlippedCardIndex!) as? Cell
+            let cardTwoCell = collectionView.cellForItem(at: secondFlippedCardIndex) as? Cell
+            
+            
+            // Compare the two cards
+            if cardOne.imageName == cardTwo.imageName {
+                // It is a match
+                
+                // Set the status and remove them
+                cardOne.isMatched = true
+                cardTwo.isMatched = true
+                
+                cardOneCell?.remove()
+                cardTwoCell?.remove()
+                
+            } else {
+                
+                // It is not a match
+                
+                // Flip them back over
+            
+                cardOneCell?.flipDown()
+                cardTwoCell?.flipDown()
+            }
+            
+            // Reset the firstFlippedCardIndex property
+            firstFlippedCardIndex = nil
         }
     }
 }
