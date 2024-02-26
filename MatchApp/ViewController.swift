@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     let cardModel = CardModel()
     var cardsArray = [Card]()
     
+    // Keep track of flipped cards
+    var firstFlippedCardIndex: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class ViewController: UIViewController {
         cardsArray = cardModel.getCards()
         
         // Set the view controller as the datasource and delegate of the collection view
-
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -68,13 +70,23 @@ extension ViewController: UICollectionViewDelegate {
             
             //Check the status of the card to determine how to flip it
             if cell.card?.isFlipped == false {
+                
+                // Flip the card up
                 cell.flipUP()
-            } 
-            
-            // unabling user flips the card manually
-//            else {
-//                cell.flipDown()
-//            }
+                
+                // Check whether this is the first flipped card or the second
+                if firstFlippedCardIndex == nil {
+                    
+                    // This is the first flipped card
+                    firstFlippedCardIndex = indexPath
+                    
+                } else {
+                    
+                    // Second card that is flipped
+                    
+                    // Run the comparison logic
+                }
+            }
         }
     }
 }
