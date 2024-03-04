@@ -47,12 +47,6 @@ extension ViewController: UICollectionViewDataSource {
         // Get a cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as! Cell
         
-        // Get the card from the card array
-        let touchedCard = cardsArray[indexPath.row]
-        
-        // TODO: Finish configuring the cell
-        cell.configureCell(card: touchedCard)
-        
         // Return it
         return cell
     }
@@ -62,6 +56,18 @@ extension ViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // Configure the state of the cellbased on the properties of the Card that it represents
+        
+        let cardCell = cell as? Cell
+        // Get the card from the card array
+        let touchedCard = cardsArray[indexPath.row]
+        
+        // Finish configuring the cell
+        cardCell?.configureCell(card: touchedCard)
+        
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -91,6 +97,7 @@ extension ViewController: UICollectionViewDelegate {
         }
         
         // MARK: - Game Logic Method
+        
         func checkForMatch(_ secondFlippedCardIndex: IndexPath) {
             
             // Get the two card objects for the two indices and see if they match

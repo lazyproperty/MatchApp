@@ -26,6 +26,10 @@ class Cell: UICollectionViewCell {
         
         // Reset the state of the cell by checking the flipped status of the card and then showing the front or the back imageview accordingly
         if card.isMatched == true {
+            backImageView.alpha = 0
+            frontImageView.alpha = 0
+            return
+        } else {
             backImageView.alpha = 1
             frontImageView.alpha = 1
         }
@@ -52,6 +56,7 @@ class Cell: UICollectionViewCell {
     }
     
     func flipDown(speed: TimeInterval = 0.3, delay: TimeInterval = 0.5) {
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
             //Flip down animation
             UIView.transition(from: self.frontImageView, to: self.backImageView, duration: speed, options: [.showHideTransitionViews, .transitionFlipFromLeft])
